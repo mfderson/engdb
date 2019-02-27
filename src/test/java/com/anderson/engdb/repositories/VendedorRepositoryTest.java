@@ -20,16 +20,55 @@ public class VendedorRepositoryTest {
 	private VendedorRepository vendedorRepository;
 	
 	@Test
-	public void quandoEncontraPeloId_EntaoRetornaVendedor() {
+	public void testSucessoBuscaPorId_entaoRetornaVendedor() {
 		
 		// given
-		Vendedor guilherme = new Vendedor(null, "Guilherme Victor Thiago Corte Real", "09720484306");
-		vendedorRepository.save(guilherme);
+		Vendedor vendGuilherme = new Vendedor(null, "Guilherme Victor Thiago Corte Real", "09720484306");
+		vendedorRepository.save(vendGuilherme);
 		
 		// when
-		Optional<Vendedor> vendEncontrato = vendedorRepository.findById(guilherme.getId());
+		Optional<Vendedor> vendEncontrado = vendedorRepository.findById(vendGuilherme.getId());
 		
 		//then
-		assertThat(vendEncontrato.get().getNome()).isEqualTo(guilherme.getNome());
+		assertThat(vendEncontrado.get().getNome()).isEqualTo(vendGuilherme.getNome());
+	}
+	
+	@Test
+	public void testSucessoBuscaPorIdInexistente_entaoRetornaNull() {
+		
+		// given
+		
+		// when
+		Optional<Vendedor> vendEncontrado = vendedorRepository.findById(10000);
+		
+		// then
+		assertThat(vendEncontrado).isEmpty();
+	}
+	
+	@Test
+	public void testSucessoBuscaPorCpf_entaoRetornaVendedor() {
+		
+		// given
+		Vendedor vendIsabella = new Vendedor(null, "Isabella Maria Novaes", "06558847264");
+		vendedorRepository.save(vendIsabella);
+		
+		// when
+		Vendedor vendEncontrado = vendedorRepository.findByCpf("06558847264");
+		
+		// then
+		assertThat(vendIsabella.getCpf()).isEqualTo(vendEncontrado.getCpf());
+		
+	}
+	
+	@Test
+	public void testSucessoBuscaPorCpfInexistente_entaoRetornaNull() {
+		
+		// given
+		
+		// when
+		Vendedor vendEncontrado = vendedorRepository.findByCpf("01010101010");
+		
+		// then
+		assertThat(vendEncontrado).isNull();
 	}
 }
