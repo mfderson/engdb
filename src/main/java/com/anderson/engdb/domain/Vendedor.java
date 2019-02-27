@@ -8,7 +8,7 @@ public class Vendedor extends Pessoa {
 	
 	public Vendedor() { }
 	
-	public Vendedor(Long id, String nome, String cpf) {
+	public Vendedor(Integer id, String nome, String cpf) {
 		super(id, nome, cpf);
 	}
 }
