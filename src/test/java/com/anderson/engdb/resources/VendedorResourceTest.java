@@ -63,4 +63,20 @@ public class VendedorResourceTest {
 				.contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.cpf", is("00163681694")));
 	}
+	
+	@Test
+	public void givenVendedorIdNotExist_whenGetVendedor_thenStatus404() throws Exception {
+		
+		mvc.perform(get("/vendedores/9999")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());	
+	}
+	
+	@Test
+	public void givenVendedorCpfNotExist_whenGetVendedor_thenStatus404() throws Exception {
+		
+		mvc.perform(get("/vendedores/cpf?value=88153912402")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
 }

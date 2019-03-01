@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.anderson.engdb.domain.Vendedor;
 import com.anderson.engdb.repositories.VendedorRepository;
+import com.anderson.engdb.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class VendedorService {
@@ -17,12 +18,14 @@ public class VendedorService {
 	public Vendedor findById(Integer id) {
 		
 		Optional<Vendedor> obj = repo.findById(id);		
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Vendedor.class.getName()));
 	}
 	
 	public Vendedor findByCpf(String cpf) {
 		
 		Optional<Vendedor> obj = repo.findByCpf(cpf);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! cpf: " + cpf + ", Tipo: " + Vendedor.class.getName()));
 	}
 }
