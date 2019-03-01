@@ -5,6 +5,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.anderson.engdb.domain.enums.Sexo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Cliente extends Pessoa {
@@ -12,6 +13,7 @@ public class Cliente extends Pessoa {
 
 	private Integer sexo;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "vendedor_id")
 	private Vendedor vendedor;
