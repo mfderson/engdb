@@ -2,6 +2,7 @@ package com.anderson.engdb.resources;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,8 +18,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.anderson.engdb.EngdbApplication;
 import com.anderson.engdb.domain.Vendedor;
+import com.anderson.engdb.dto.VendedorNewDTO;
 import com.anderson.engdb.repositories.VendedorRepository;
-import com.anderson.engdb.services.VendedorService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -33,8 +35,8 @@ public class VendedorResourceTest {
 	@Autowired
 	private VendedorRepository repository;
 	
-	@Autowired
-	private VendedorService service;
+	//@Autowired
+	//private VendedorService service;
 	
 	@Test
 	public void givenVendedorId_whenGetVendedor_thenStatus200() throws Exception {
@@ -78,5 +80,53 @@ public class VendedorResourceTest {
 		mvc.perform(get("/vendedores/cpf?value=88153912402")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	public void givenVendedorNewDtoValid_whenPostVendedor_thenStatus400() throws Exception {
+		
+		VendedorNewDTO vend = new VendedorNewDTO();
+		vend.setNome("Anthony Juan Ricardo Brito");
+		vend.setCpf("82822436398");
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(vend);
+		
+		mvc.perform(post("/vendedores")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isCreated());
+	}
+	
+	@Test
+	public void givenVendedorNewDtoInvalidName_whenPostVendedor_thenStatus201() throws Exception {
+		
+		VendedorNewDTO vend = new VendedorNewDTO();
+		vend.setNome("Anth");
+		vend.setCpf("85265309250");
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(vend);
+		
+		mvc.perform(post("/vendedores")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void givenVendedorNewDtoInvalidCpf_whenPostVendedor_thenStatus201() throws Exception {
+		
+		VendedorNewDTO vend = new VendedorNewDTO();
+		vend.setNome("Heitor Theo da Mata");
+		vend.setCpf("85265309251");
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(vend);
+		
+		mvc.perform(post("/vendedores")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isBadRequest());
 	}
 }
