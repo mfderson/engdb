@@ -53,11 +53,10 @@ public class VendedorRepositoryTest {
 		vendedorRepository.save(vendIsabella);
 		
 		// when
-		Vendedor vendEncontrado = vendedorRepository.findByCpf("06558847264");
+		Optional<Vendedor> vendEncontrado = vendedorRepository.findByCpf("06558847264");
 		
 		// then
-		assertThat(vendIsabella.getCpf()).isEqualTo(vendEncontrado.getCpf());
-		
+		assertThat(vendIsabella.getCpf()).isEqualTo(vendEncontrado.get().getCpf());
 	}
 	
 	@Test
@@ -66,7 +65,7 @@ public class VendedorRepositoryTest {
 		// given
 		
 		// when
-		Vendedor vendEncontrado = vendedorRepository.findByCpf("01010101010");
+		Optional<Vendedor> vendEncontrado = vendedorRepository.findByCpf("01010101010");
 		
 		// then
 		assertThat(vendEncontrado).isNull();

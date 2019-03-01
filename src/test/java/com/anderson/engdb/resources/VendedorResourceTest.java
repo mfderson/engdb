@@ -39,28 +39,28 @@ public class VendedorResourceTest {
 	@Test
 	public void givenVendedorId_whenGetVendedor_thenStatus200() throws Exception {
 		
-		Vendedor vendGuilherme = new Vendedor(null, "Guilherme Victor Thiago Corte Real", "09720484306");
-		repository.save(vendGuilherme);
+		Vendedor vend1 = new Vendedor(null, "Severino Cláudio Vitor da Cunha", "98231540156");
+		repository.save(vend1);
 		
-		mvc.perform(get("/vendedores/" + vendGuilherme.getId())
+		mvc.perform(get("/vendedores/" + vend1.getId())
 			.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content()
 			.contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-			.andExpect(jsonPath("$.cpf", is("09720484306")));	
+			.andExpect(jsonPath("$.cpf", is("98231540156")));	
 	}
 	
 	@Test
 	public void givenVendedorCpf_whenGetVendedor_thenStatus200() throws Exception {
 		
-		Vendedor vendIsabella = new Vendedor(null, "Isabella Maria Novaes", "06558847264");
-		repository.save(vendIsabella);
+		Vendedor vend = new Vendedor(null, "Juliana Andreia Evelyn Rodrigues", "00163681694");
+		repository.save(vend);
 		
-		mvc.perform(get("/vendedores/?cpf=" + vendIsabella.getCpf())
+		mvc.perform(get("/vendedores/cpf?value=" + vend.getCpf())
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content()
 				.contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$.cpf", is("06558847264")));
+				.andExpect(jsonPath("$.cpf", is("00163681694")));
 	}
 }

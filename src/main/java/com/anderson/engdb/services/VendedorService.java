@@ -16,8 +16,13 @@ public class VendedorService {
 	
 	public Vendedor findById(Integer id) {
 		
-		Optional<Vendedor> obj = repo.findById(id);
+		Optional<Vendedor> obj = repo.findById(id);		
+		return obj.orElse(null);
+	}
+	
+	public Vendedor findByCpf(String cpf) {
 		
+		Optional<Vendedor> obj = repo.findByCpf(cpf);
 		return obj.orElse(null);
 	}
 }
