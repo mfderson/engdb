@@ -3,6 +3,7 @@ package com.anderson.engdb.resources;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.anderson.engdb.EngdbApplication;
 import com.anderson.engdb.domain.Vendedor;
 import com.anderson.engdb.dto.VendedorNewDTO;
+import com.anderson.engdb.dto.VendedorUpdtDTO;
 import com.anderson.engdb.repositories.VendedorRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -180,6 +182,55 @@ public class VendedorResourceTest {
 		String json = objMapper.writeValueAsString(vend);
 		
 		mvc.perform(post("/vendedores")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(content().json("{'errors':[{'fieldName':'nome'}]}"));
+	}
+	
+	@Test
+	public void givenVendedorUpdtDtoValid_whenPostVendedor_thenStatus204() throws Exception {
+		
+		VendedorUpdtDTO vend = new VendedorUpdtDTO();
+		vend.setNome("Nome Atualizado");
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(vend);
+		
+		mvc.perform(put("/vendedores/1")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isNoContent());
+	}
+	
+	@Test
+	public void givenVendedorUpdtDtoInvalidName_whenPostVendedor_thenStatus204() throws Exception {
+		
+		VendedorUpdtDTO vend = new VendedorUpdtDTO();
+		vend.setNome("Nom");
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(vend);
+		
+		mvc.perform(put("/vendedores/1")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(content().json("{'errors':[{'fieldName':'nome'}]}"));
+	}
+	
+	@Test
+	public void givenVendedorUpdtDtoExistName_whenPostVendedor_thenStatus204() throws Exception {
+		
+		VendedorUpdtDTO vend = new VendedorUpdtDTO();
+		vend.setNome("Isabella Maria Novaes");
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(vend);
+		
+		mvc.perform(put("/vendedores/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
 				.andExpect(status().isBadRequest())

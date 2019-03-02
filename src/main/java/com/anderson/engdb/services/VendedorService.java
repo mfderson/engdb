@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.anderson.engdb.domain.Vendedor;
 import com.anderson.engdb.dto.VendedorNewDTO;
+import com.anderson.engdb.dto.VendedorUpdtDTO;
 import com.anderson.engdb.repositories.VendedorRepository;
 import com.anderson.engdb.services.exceptions.ObjectNotFoundException;
 
@@ -35,9 +36,24 @@ public class VendedorService {
 		obj = repo.save(obj);
 		return obj;
 	}
+	
+	public Vendedor update(Vendedor obj) {
+		Vendedor newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
 
 	public Vendedor fromDto(VendedorNewDTO objDto) {
 		Vendedor obj = new Vendedor(null, objDto.getNome().toUpperCase(), objDto.getCpf());
 		return obj;
+	}
+
+	public Vendedor fromDto(VendedorUpdtDTO objDto) {
+		return new Vendedor(objDto.getId(), objDto.getNome(), null);
+	}
+
+	public Vendedor updateData(Vendedor newObj, Vendedor obj) {
+		newObj.setNome(obj.getNome());		
+		return null;
 	}
 }
