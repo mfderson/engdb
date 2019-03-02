@@ -46,12 +46,12 @@ public class VendedorService {
 	}
 
 	public Vendedor fromDto(VendedorNewDTO objDto) {
-		Vendedor obj = new Vendedor(null, objDto.getNome(), objDto.getCpf());
+		Vendedor obj = new Vendedor(null, objDto.getNome().trim().replaceAll("\\s+", " "), objDto.getCpf());
 		return obj;
 	}
 
 	public Vendedor fromDto(VendedorUpdtDTO objDto) {
-		return new Vendedor(objDto.getId(), objDto.getNome(), null);
+		return new Vendedor(objDto.getId(), objDto.getNome().trim().replaceAll("\\s+", " "), null);
 	}
 
 	public Vendedor updateData(Vendedor newObj, Vendedor obj) {

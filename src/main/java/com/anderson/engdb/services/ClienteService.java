@@ -45,7 +45,7 @@ public class ClienteService {
 	public Cliente fromDto(ClienteNewDTO objDto) {
 		
 		Vendedor vend = vendedorService.findById(objDto.getVendedorId());
-		Cliente obj = new Cliente(null, objDto.getNome().trim(), objDto.getCpf(), Sexo.toEnum(objDto.getSexo()), vend);
+		Cliente obj = new Cliente(null, objDto.getNome().trim().replaceAll("\\s+", " "), objDto.getCpf(), Sexo.toEnum(objDto.getSexo()), vend);
 		return obj;
 	}
 }
