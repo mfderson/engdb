@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.anderson.engdb.domain.Vendedor;
 import com.anderson.engdb.dto.VendedorNewDTO;
@@ -34,6 +35,7 @@ public class VendedorService {
 				"Objeto não encontrado! cpf: " + cpf + ", Tipo: " + Vendedor.class.getName()));
 	}
 
+	@Transactional
 	public Vendedor insert(Vendedor obj) {
 		obj.setId(null);
 		obj = repo.save(obj);
