@@ -83,7 +83,7 @@ public class VendedorResourceTest {
 	}
 	
 	@Test
-	public void givenVendedorNewDtoValid_whenPostVendedor_thenStatus400() throws Exception {
+	public void givenVendedorNewDtoValid_whenPostVendedor_thenStatus201() throws Exception {
 		
 		VendedorNewDTO vend = new VendedorNewDTO();
 		vend.setNome("Anthony Juan Ricardo Brito");
@@ -99,7 +99,7 @@ public class VendedorResourceTest {
 	}
 	
 	@Test
-	public void givenVendedorNewDtoInvalidName_whenPostVendedor_thenStatus201() throws Exception {
+	public void givenVendedorNewDtoInvalidName_whenPostVendedor_thenStatus400() throws Exception {
 		
 		VendedorNewDTO vend = new VendedorNewDTO();
 		vend.setNome("Anth");
@@ -111,11 +111,13 @@ public class VendedorResourceTest {
 		mvc.perform(post("/vendedores")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(content().json("{'errors':[{'fieldName':'nome'}]}"));;
 	}
 	
 	@Test
-	public void givenVendedorNewDtoInvalidCpf_whenPostVendedor_thenStatus201() throws Exception {
+	public void givenVendedorNewDtoInvalidCpf_whenPostVendedor_thenStatus400() throws Exception {
 		
 		VendedorNewDTO vend = new VendedorNewDTO();
 		vend.setNome("Heitor Theo da Mata");
@@ -127,6 +129,25 @@ public class VendedorResourceTest {
 		mvc.perform(post("/vendedores")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(content().json("{'errors':[{'fieldName':'cpf'}]}"));
+	}
+	
+	@Test
+	public void givenVendedorNewDtoInvalidCpfAndName_whenPostVendedor_thenStatus400() throws Exception {
+		
+		VendedorNewDTO vend = new VendedorNewDTO();
+		vend.setNome("Agatha Kamilly Alessandra Campos Amaral Santos Aparecida Moura Santana Lisboa");
+		vend.setCpf("76724559668");
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(vend);
+		
+		mvc.perform(post("/vendedores")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.msg").value("Erro de validação"));
 	}
 }
