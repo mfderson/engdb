@@ -11,6 +11,7 @@ import com.anderson.engdb.domain.enums.Sexo;
 import com.anderson.engdb.dto.ClienteNewDTO;
 import com.anderson.engdb.repositories.ClienteRepository;
 import com.anderson.engdb.services.exceptions.ObjectNotFoundException;
+import com.anderson.engdb.services.utils.PadronizarNome;
 
 @Service
 public class ClienteService {
@@ -45,7 +46,7 @@ public class ClienteService {
 	public Cliente fromDto(ClienteNewDTO objDto) {
 		
 		Vendedor vend = vendedorService.findById(objDto.getVendedorId());
-		Cliente obj = new Cliente(null, objDto.getNome().trim().replaceAll("\\s+", " "), objDto.getCpf(), Sexo.toEnum(objDto.getSexo()), vend);
+		Cliente obj = new Cliente(null, PadronizarNome.removeWhiteSpacesTogether(objDto.getNome()), objDto.getCpf(), Sexo.toEnum(objDto.getSexo()), vend);
 		return obj;
 	}
 }

@@ -12,6 +12,7 @@ import com.anderson.engdb.dto.VendedorNewDTO;
 import com.anderson.engdb.dto.VendedorUpdtDTO;
 import com.anderson.engdb.repositories.VendedorRepository;
 import com.anderson.engdb.services.exceptions.ObjectNotFoundException;
+import com.anderson.engdb.services.utils.PadronizarNome;
 
 @Service
 public class VendedorService {
@@ -51,7 +52,7 @@ public class VendedorService {
 	}
 
 	public Vendedor fromDto(VendedorUpdtDTO objDto) {
-		return new Vendedor(objDto.getId(), objDto.getNome().trim().replaceAll("\\s+", " "), null);
+		return new Vendedor(objDto.getId(), PadronizarNome.removeWhiteSpacesTogether(objDto.getNome()), null);
 	}
 
 	public Vendedor updateData(Vendedor newObj, Vendedor obj) {
