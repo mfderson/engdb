@@ -190,7 +190,7 @@ public class VendedorResourceTest {
 	}
 	
 	@Test
-	public void givenVendedorUpdtDtoValid_whenPostVendedor_thenStatus204() throws Exception {
+	public void givenVendedorUpdtDtoValid_whenPutVendedor_thenStatus204() throws Exception {
 		
 		VendedorUpdtDTO vend = new VendedorUpdtDTO();
 		vend.setNome("Nome Atualizado");
@@ -205,7 +205,7 @@ public class VendedorResourceTest {
 	}
 	
 	@Test
-	public void givenVendedorUpdtDtoInvalidName_whenPostVendedor_thenStatus204() throws Exception {
+	public void givenVendedorUpdtDtoInvalidName_whenPutVendedor_thenStatus204() throws Exception {
 		
 		VendedorUpdtDTO vend = new VendedorUpdtDTO();
 		vend.setNome("Nom");
@@ -222,7 +222,7 @@ public class VendedorResourceTest {
 	}
 	
 	@Test
-	public void givenVendedorUpdtDtoExistName_whenPostVendedor_thenStatus204() throws Exception {
+	public void givenVendedorUpdtDtoExistName_whenPutVendedor_thenStatus204() throws Exception {
 		
 		VendedorUpdtDTO vend = new VendedorUpdtDTO();
 		vend.setNome("Isabella Maria Novaes");
@@ -236,5 +236,13 @@ public class VendedorResourceTest {
 				.andExpect(status().isBadRequest())
 				.andExpect(jsonPath("$.msg").value("Erro de validação"))
 				.andExpect(content().json("{'errors':[{'fieldName':'nome'}]}"));
+	}
+	
+	@Test
+	public void givenFindAllVendedores_whenGetVendedores_thenStatus200() throws Exception {
+		
+		mvc.perform(get("/vendedores/page")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
 	}
 }

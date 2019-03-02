@@ -3,6 +3,8 @@ package com.anderson.engdb.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.anderson.engdb.domain.Vendedor;
@@ -55,5 +57,9 @@ public class VendedorService {
 	public Vendedor updateData(Vendedor newObj, Vendedor obj) {
 		newObj.setNome(obj.getNome());		
 		return null;
+	}
+
+	public Page<Vendedor> findAll(Pageable pageable) {
+		return repo.findAll(pageable);
 	}
 }

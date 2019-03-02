@@ -2,26 +2,21 @@ package com.anderson.engdb.dto;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotEmpty;
-
-import org.hibernate.validator.constraints.Length;
-
 import com.anderson.engdb.domain.Pessoa;
 
-public abstract class PessoaUpdtDTO implements Serializable {
+public abstract class PessoaViewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	
-	@NotEmpty(message = "Preenchimento obrigatório")
-	@Length(min = 10, max = 50, message = "O tamanho deve ser entre 10 e 50 caracteres")
 	private String nome;
+	private String cpf;
 	
-	public PessoaUpdtDTO() { }
+	public PessoaViewDTO() { }
 
-	public PessoaUpdtDTO(Pessoa obj) {
+	public PessoaViewDTO(Pessoa obj) {
 		id = obj.getId();
 		nome = obj.getNome();
+		cpf = obj.getCpf();
 	}
 
 	public Integer getId() {
@@ -38,5 +33,13 @@ public abstract class PessoaUpdtDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 }
