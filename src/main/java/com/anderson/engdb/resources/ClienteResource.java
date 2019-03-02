@@ -23,6 +23,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.anderson.engdb.domain.Cliente;
 import com.anderson.engdb.dto.ClienteNewDTO;
 import com.anderson.engdb.dto.ClienteUpdtDTO;
+import com.anderson.engdb.dto.ClienteViewDTO;
+import com.anderson.engdb.dto.VendedorViewDTO;
 import com.anderson.engdb.resources.utils.CONSTANTS;
 import com.anderson.engdb.services.ClienteService;
 
@@ -73,5 +75,19 @@ public class ClienteResource {
 		Page<Cliente> page = service.findAll(pageable);
 		
 		return ResponseEntity.ok().body(page);
+	}
+	
+	@GetMapping(value = "/pageWithVendedor")
+	public ResponseEntity<Page<ClienteViewDTO>> findAllWithVendedor(
+			@PageableDefault(
+					size = CONSTANTS.DEFAULT_PAGE_SIZE, 
+					page = CONSTANTS.DEFAULT_PAGE_INITIAL,
+					sort = "nome",
+					direction = Sort.Direction.ASC) Pageable pageable) {
+		
+		Page<Cliente> page = service.findAll(pageable);
+		Page<ClienteViewDTO> pageDto = page.map(obj -> new ClienteViewDTO(obj));
+		
+		return ResponseEntity.ok().body(pageDto);
 	}
 }

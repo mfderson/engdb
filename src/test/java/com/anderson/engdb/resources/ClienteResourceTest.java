@@ -228,9 +228,17 @@ public class ClienteResourceTest {
 	}
 	
 	@Test
-	public void givenFindAllVendedores_whenGetVendedores_thenStatus200() throws Exception {
+	public void givenFindAllClientes_whenGetClientes_thenStatus200() throws Exception {
 		
 		mvc.perform(get("/clientes/page")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void givenFindAllClientes_whenGetClientesWithVendedores_thenStatus200() throws Exception {
+		
+		mvc.perform(get("/clientes/pageWithVendedor")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
