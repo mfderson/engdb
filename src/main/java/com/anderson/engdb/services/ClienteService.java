@@ -3,6 +3,8 @@ package com.anderson.engdb.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.anderson.engdb.domain.Cliente;
@@ -49,6 +51,10 @@ public class ClienteService {
 		Cliente newObj = findById(obj.getId());
 		updateData(newObj, obj);
 		return repo.save(newObj);
+	}
+	
+	public Page<Cliente> findAll(Pageable pageable) {
+		return repo.findAll(pageable);
 	}
 	
 	public Cliente fromDto(ClienteNewDTO objDto) {

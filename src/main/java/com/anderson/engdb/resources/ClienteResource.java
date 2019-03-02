@@ -5,6 +5,10 @@ import java.net.URI;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.anderson.engdb.domain.Cliente;
 import com.anderson.engdb.dto.ClienteNewDTO;
 import com.anderson.engdb.dto.ClienteUpdtDTO;
+import com.anderson.engdb.resources.utils.CONSTANTS;
 import com.anderson.engdb.services.ClienteService;
 
 @RestController
@@ -55,5 +60,18 @@ public class ClienteResource {
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping(value = "/page")
+	public ResponseEntity<Page<Cliente>> findAll(
+			@PageableDefault(
+					size = CONSTANTS.DEFAULT_PAGE_SIZE, 
+					page = CONSTANTS.DEFAULT_PAGE_INITIAL,
+					sort = "nome",
+					direction = Sort.Direction.ASC) Pageable pageable) {
+		
+		Page<Cliente> page = service.findAll(pageable);
+		
+		return ResponseEntity.ok().body(page);
 	}
 }

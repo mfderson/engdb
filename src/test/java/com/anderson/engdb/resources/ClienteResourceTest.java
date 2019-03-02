@@ -226,4 +226,12 @@ public class ClienteResourceTest {
 				.content(json))
 				.andExpect(status().isBadRequest());
 	}
+	
+	@Test
+	public void givenFindAllVendedores_whenGetVendedores_thenStatus200() throws Exception {
+		
+		mvc.perform(get("/clientes/page")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
 }

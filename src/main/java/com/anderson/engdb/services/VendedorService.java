@@ -40,6 +40,10 @@ public class VendedorService {
 		return obj;
 	}
 	
+	public Page<Vendedor> findAll(Pageable pageable) {
+		return repo.findAll(pageable);
+	}
+	
 	public Vendedor update(Vendedor obj) {
 		Vendedor newObj = findById(obj.getId());
 		updateData(newObj, obj);
@@ -58,9 +62,5 @@ public class VendedorService {
 	public Vendedor updateData(Vendedor newObj, Vendedor obj) {
 		newObj.setNome(obj.getNome());		
 		return null;
-	}
-
-	public Page<Vendedor> findAll(Pageable pageable) {
-		return repo.findAll(pageable);
 	}
 }
