@@ -24,7 +24,6 @@ import com.anderson.engdb.domain.Cliente;
 import com.anderson.engdb.dto.ClienteNewDTO;
 import com.anderson.engdb.dto.ClienteUpdtDTO;
 import com.anderson.engdb.dto.ClienteViewDTO;
-import com.anderson.engdb.dto.VendedorViewDTO;
 import com.anderson.engdb.resources.utils.CONSTANTS;
 import com.anderson.engdb.services.ClienteService;
 
@@ -86,6 +85,21 @@ public class ClienteResource {
 					direction = Sort.Direction.ASC) Pageable pageable) {
 		
 		Page<Cliente> page = service.findAll(pageable);
+		Page<ClienteViewDTO> pageDto = page.map(obj -> new ClienteViewDTO(obj));
+		
+		return ResponseEntity.ok().body(pageDto);
+	}
+	
+	@GetMapping(value = "/vendedorId")
+	public ResponseEntity<Page<ClienteViewDTO>> findAllClientesByVendedorId(
+			@RequestParam(value = "value") Integer id,
+			@PageableDefault(
+					size = CONSTANTS.DEFAULT_PAGE_SIZE, 
+					page = CONSTANTS.DEFAULT_PAGE_INITIAL,
+					sort = "nome",
+					direction = Sort.Direction.ASC) Pageable pageable) {
+		
+		Page<Cliente> page = service.findAllByVendedorId(id, pageable);
 		Page<ClienteViewDTO> pageDto = page.map(obj -> new ClienteViewDTO(obj));
 		
 		return ResponseEntity.ok().body(pageDto);

@@ -57,6 +57,10 @@ public class ClienteService {
 		return repo.findAll(pageable);
 	}
 	
+	public Page<Cliente> findAllByVendedorId(Integer id, Pageable pageable) {
+		return repo.findAllByVendedorId(id, pageable);
+	}
+	
 	public Cliente fromDto(ClienteNewDTO objDto) {
 		
 		Vendedor vend = vendedorService.findById(objDto.getVendedorId());

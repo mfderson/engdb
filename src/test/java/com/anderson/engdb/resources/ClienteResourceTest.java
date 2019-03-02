@@ -242,4 +242,12 @@ public class ClienteResourceTest {
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
+	
+	@Test
+	public void givenVendedorId_whenGetClientesByVendedorId_thenStatus200() throws Exception {
+		
+		mvc.perform(get("/clientes/vendedorId?value=2")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
 }
