@@ -115,7 +115,7 @@ public class VendedorResourceTest {
 				.content(json))
 				.andExpect(status().isBadRequest())
 				.andExpect(jsonPath("$.msg").value("Erro de validação"))
-				.andExpect(content().json("{'errors':[{'fieldName':'nome'}]}"));;
+				.andExpect(content().json("{'errors':[{'fieldName':'nome'}]}"));
 	}
 	
 	@Test

@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.anderson.engdb.domain.Cliente;
+import com.anderson.engdb.domain.Vendedor;
+import com.anderson.engdb.domain.enums.Sexo;
+import com.anderson.engdb.dto.ClienteNewDTO;
 import com.anderson.engdb.repositories.ClienteRepository;
 import com.anderson.engdb.services.exceptions.ObjectNotFoundException;
 
@@ -14,6 +17,9 @@ public class ClienteService {
 	
 	@Autowired
 	private ClienteRepository repo;
+	
+	@Autowired
+	private VendedorService vendedorService;
 
 	public Cliente findById(Integer id) {
 		
@@ -27,5 +33,19 @@ public class ClienteService {
 		Optional<Cliente> obj = repo.findByCpf(cpf);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! cpf: " + cpf + ", Tipo: " + Cliente.class.getName()));
+	}
+
+	public Cliente insert(Cliente obj) {
+		
+		obj.setId(null);
+		obj = repo.save(obj);
+		return obj;
+	}
+	
+	public Cliente fromDto(ClienteNewDTO objDto) {
+		
+		Vendedor vend = vendedorService.findById(objDto.getVendedorId());
+		Cliente obj = new Cliente(null, objDto.getNome().trim(), objDto.getCpf(), Sexo.toEnum(objDto.getSexo()), vend);
+		return obj;
 	}
 }

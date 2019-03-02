@@ -13,4 +13,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
 	@Transactional(readOnly = true)
 	Optional<Cliente> findByCpf(String cpf);
+	
+	@Transactional(readOnly = true)
+	Optional<Cliente> findByNomeIgnoreCase(String nome);
 }
