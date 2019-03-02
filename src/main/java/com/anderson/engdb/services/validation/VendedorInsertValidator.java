@@ -28,6 +28,9 @@ public class VendedorInsertValidator implements ConstraintValidator<VendedorInse
 		if (repo.findByCpf(objDto.getCpf()).isPresent())
 			list.add(new FieldMessage("cpf", "Já existe um vendedor para este CPF"));
 		
+		if (repo.findByNomeIgnoreCase(objDto.getNome()).isPresent())
+			list.add(new FieldMessage("nome", "Já existe um vendedor com mesmo nome"));
+		
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())

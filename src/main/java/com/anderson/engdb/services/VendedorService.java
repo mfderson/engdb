@@ -37,7 +37,7 @@ public class VendedorService {
 	}
 
 	public Vendedor fromDto(VendedorNewDTO objDto) {
-		Vendedor obj = new Vendedor(null, objDto.getNome(), objDto.getCpf());
+		Vendedor obj = new Vendedor(null, objDto.getNome().toUpperCase(), objDto.getCpf());
 		return obj;
 	}
 }

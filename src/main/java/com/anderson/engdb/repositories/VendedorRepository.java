@@ -13,4 +13,7 @@ public interface VendedorRepository extends JpaRepository<Vendedor, Integer> {
 
 	@Transactional(readOnly = true)
 	Optional<Vendedor> findByCpf(String cpf);
+	
+	@Transactional(readOnly = true)
+	Optional<Vendedor> findByNomeIgnoreCase(String nome);
 }

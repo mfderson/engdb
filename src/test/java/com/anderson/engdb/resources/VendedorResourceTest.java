@@ -150,4 +150,40 @@ public class VendedorResourceTest {
 				.andExpect(status().isBadRequest())
 				.andExpect(jsonPath("$.msg").value("Erro de validação"));
 	}
+	
+	@Test
+	public void givenVendedorNewDtoDuplicatedCpf_whenPostVendedor_thenStatus400() throws Exception {
+		
+		VendedorNewDTO vend = new VendedorNewDTO();
+		vend.setNome("Alana Mariana Pereira");
+		vend.setCpf("09720484306");
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(vend);
+		
+		mvc.perform(post("/vendedores")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(content().json("{'errors':[{'fieldName':'cpf'}]}"));
+	}
+	
+	@Test
+	public void givenVendedorNewDtoDuplicatedName_whenPostVendedor_thenStatus400() throws Exception {
+		
+		VendedorNewDTO vend = new VendedorNewDTO();
+		vend.setNome("guilherme victor thiago corte real");
+		vend.setCpf("65492807889");
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(vend);
+		
+		mvc.perform(post("/vendedores")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(content().json("{'errors':[{'fieldName':'nome'}]}"));
+	}
 }
