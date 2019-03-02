@@ -2,6 +2,7 @@ package com.anderson.engdb.resources;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.anderson.engdb.EngdbApplication;
 import com.anderson.engdb.dto.ClienteNewDTO;
+import com.anderson.engdb.dto.ClienteUpdtDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
@@ -156,6 +158,70 @@ public class ClienteResourceTest {
 		String json = objMapper.writeValueAsString(objDto);
 		
 		mvc.perform(post("/clientes")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void givenClienteUpdtDtoValid_whenPutCliente_thenStatus204() throws Exception {
+		
+		ClienteUpdtDTO obj = new ClienteUpdtDTO();
+		obj.setNome("Nome Atualizado com Sucesso");
+		obj.setSexo(2);
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(obj);
+		
+		mvc.perform(put("/clientes/4")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isNoContent());
+	}
+	
+	@Test
+	public void givenClienteUpdtDtoInvalidSexo_whenPutCliente_thenStatus400() throws Exception {
+		
+		ClienteUpdtDTO obj = new ClienteUpdtDTO();
+		obj.setNome("Nome Atualizado com Sucesso");
+		obj.setSexo(4);
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(obj);
+		
+		mvc.perform(put("/clientes/5")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void givenClienteUpdtDtoInvalidNameWithWhiteSpaces_whenPutCliente_thenStatus400() throws Exception {
+		
+		ClienteUpdtDTO obj = new ClienteUpdtDTO();
+		obj.setNome("     Rafa");
+		obj.setSexo(2);
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(obj);
+		
+		mvc.perform(put("/clientes/5")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void givenClienteUpdtDtoExistNameButdifferentId_whenPutCliente_thenStatus400() throws Exception {
+		
+		ClienteUpdtDTO obj = new ClienteUpdtDTO();
+		obj.setNome("Bárbara Rebeca Gonçalves");
+		obj.setSexo(2);
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(obj);
+		
+		mvc.perform(put("/clientes/5")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
 				.andExpect(status().isBadRequest());

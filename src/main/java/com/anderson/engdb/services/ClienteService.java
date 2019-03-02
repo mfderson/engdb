@@ -9,6 +9,7 @@ import com.anderson.engdb.domain.Cliente;
 import com.anderson.engdb.domain.Vendedor;
 import com.anderson.engdb.domain.enums.Sexo;
 import com.anderson.engdb.dto.ClienteNewDTO;
+import com.anderson.engdb.dto.ClienteUpdtDTO;
 import com.anderson.engdb.repositories.ClienteRepository;
 import com.anderson.engdb.services.exceptions.ObjectNotFoundException;
 import com.anderson.engdb.services.utils.PadronizarNome;
@@ -43,10 +44,28 @@ public class ClienteService {
 		return obj;
 	}
 	
+	public Cliente update(Cliente obj) {
+		
+		Cliente newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+	
 	public Cliente fromDto(ClienteNewDTO objDto) {
 		
 		Vendedor vend = vendedorService.findById(objDto.getVendedorId());
 		Cliente obj = new Cliente(null, PadronizarNome.removeWhiteSpacesTogether(objDto.getNome()), objDto.getCpf(), Sexo.toEnum(objDto.getSexo()), vend);
 		return obj;
+	}
+	
+	public Cliente fromDto(ClienteUpdtDTO objDto) {
+		return new Cliente(objDto.getId(), objDto.getNome(), null, Sexo.toEnum(objDto.getSexo()), null);
+	}
+	
+	public Cliente updateData(Cliente newObj, Cliente obj) {
+		
+		newObj.setNome(obj.getNome());
+		newObj.setSexo(obj.getSexo());
+		return newObj;
 	}
 }
