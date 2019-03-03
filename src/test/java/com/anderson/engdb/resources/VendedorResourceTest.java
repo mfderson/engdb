@@ -1,6 +1,5 @@
 package com.anderson.engdb.resources;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -52,7 +51,7 @@ public class VendedorResourceTest {
 			.andExpect(status().isOk())
 			.andExpect(content()
 			.contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-			.andExpect(jsonPath("$.cpf", is("98231540156")));	
+			.andExpect(jsonPath("$.cpf").value("98231540156"));	
 	}
 	
 	@Test
@@ -66,7 +65,7 @@ public class VendedorResourceTest {
 				.andExpect(status().isOk())
 				.andExpect(content()
 				.contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$.cpf", is("00163681694")));
+				.andExpect(jsonPath("$.cpf").value("00163681694"));
 	}
 	
 	@Test
