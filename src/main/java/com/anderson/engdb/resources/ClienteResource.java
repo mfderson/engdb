@@ -28,6 +28,8 @@ import com.anderson.engdb.dto.ClienteViewDTO;
 import com.anderson.engdb.resources.utils.CONSTANTS;
 import com.anderson.engdb.services.ClienteService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/clientes")
 public class ClienteResource {
@@ -35,18 +37,21 @@ public class ClienteResource {
 	@Autowired
 	private ClienteService service;
 	
+	@ApiOperation(value = "Busca por id")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Cliente> findById(@PathVariable Integer id) {
 		Cliente obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@ApiOperation(value = "Busca por CPF")
 	@GetMapping(value = "/cpf")
 	public ResponseEntity<Cliente> findByCpf(@RequestParam(value = "value") String cpf) {
 		Cliente obj = service.findByCpf(cpf);
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@ApiOperation(value = "Insere cliente")
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
 		Cliente obj = service.fromDto(objDto);
@@ -56,6 +61,7 @@ public class ClienteResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@ApiOperation(value = "Atualiza cliente")
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody ClienteUpdtDTO objDto) {
 		Cliente obj = service.fromDto(objDto);
@@ -64,12 +70,14 @@ public class ClienteResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@ApiOperation(value = "Remove cliente")
 	@DeleteMapping(value = "{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
+	@ApiOperation(value = "Retorna todos clientes com paginação")
 	@GetMapping(value = "/page")
 	public ResponseEntity<Page<Cliente>> findAll(
 			@PageableDefault(
@@ -83,6 +91,7 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(page);
 	}
 	
+	@ApiOperation(value = "Retorna todos os clientes com vendedores usando paginação")
 	@GetMapping(value = "/pageWithVendedor")
 	public ResponseEntity<Page<ClienteViewDTO>> findAllWithVendedor(
 			@PageableDefault(
@@ -97,6 +106,7 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(pageDto);
 	}
 	
+	@ApiOperation(value = "Busca cliente pelo id do vendedor")
 	@GetMapping(value = "/vendedorId")
 	public ResponseEntity<Page<ClienteViewDTO>> findAllClientesByVendedorId(
 			@RequestParam(value = "value") Integer id,

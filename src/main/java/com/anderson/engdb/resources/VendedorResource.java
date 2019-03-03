@@ -28,6 +28,8 @@ import com.anderson.engdb.dto.VendedorViewDTO;
 import com.anderson.engdb.resources.utils.CONSTANTS;
 import com.anderson.engdb.services.VendedorService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/vendedores")
 public class VendedorResource {
@@ -35,18 +37,21 @@ public class VendedorResource {
 	@Autowired
 	private VendedorService service;
 	
+	@ApiOperation(value = "Busca por id")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Vendedor> findById(@PathVariable Integer id) {
 		Vendedor obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@ApiOperation(value = "Busca por CPF")
 	@GetMapping(value = "/cpf")
 	public ResponseEntity<Vendedor> findByCpf(@RequestParam(value = "value") String cpf) {
 		Vendedor obj = service.findByCpf(cpf);
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@ApiOperation(value = "Insere vendedor")
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody VendedorNewDTO objDto) {
 		Vendedor obj = service.fromDto(objDto);
@@ -56,6 +61,7 @@ public class VendedorResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@ApiOperation(value = "Atualiza vendedor")
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody VendedorUpdtDTO objDto) {
 		Vendedor obj = service.fromDto(objDto);
@@ -64,12 +70,14 @@ public class VendedorResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@ApiOperation(value = "Remove vendedor")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
+	@ApiOperation(value = "Retorna todos os vendedores com paginação")
 	@GetMapping(value = "/page")
 	public ResponseEntity<Page<VendedorViewDTO>> findAll(
 			@PageableDefault(
