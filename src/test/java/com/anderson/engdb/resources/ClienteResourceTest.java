@@ -89,7 +89,7 @@ public class ClienteResourceTest {
 	}
 	
 	@Test
-	public void givenClienteNewDtoInvalidName_whenPostCliente_thenStatus400() throws Exception {
+	public void givenClienteNewDtoInvalidName_whenPostCliente_thenStatus422() throws Exception {
 		
 		ClienteNewDTO objDto = new ClienteNewDTO();
 		objDto.setNome("Ben");
@@ -103,13 +103,12 @@ public class ClienteResourceTest {
 		mvc.perform(post("/clientes")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(status().isUnprocessableEntity())
 				.andExpect(content().json("{'errors':[{'fieldName':'nome'}]}"));
 	}
 	
 	@Test
-	public void givenClienteNewDtoInvalidCpf_whenPostCliente_thenStatus400() throws Exception {
+	public void givenClienteNewDtoInvalidCpf_whenPostCliente_thenStatus422() throws Exception {
 		
 		ClienteNewDTO objDto = new ClienteNewDTO();
 		objDto.setNome("Heitor Theo da Mata");
@@ -123,8 +122,7 @@ public class ClienteResourceTest {
 		mvc.perform(post("/clientes")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(status().isUnprocessableEntity())
 				.andExpect(content().json("{'errors':[{'fieldName':'cpf'}]}"));
 	}
 	
@@ -147,7 +145,7 @@ public class ClienteResourceTest {
 	}
 	
 	@Test
-	public void givenClienteNewDtoInvalidSexo_whenPostCliente_thenStatus400() throws Exception {
+	public void givenClienteNewDtoInvalidSexo_whenPostCliente_thenStatus422() throws Exception {
 		
 		ClienteNewDTO objDto = new ClienteNewDTO();
 		objDto.setNome("Heitor Theo da Mata");
@@ -161,7 +159,7 @@ public class ClienteResourceTest {
 		mvc.perform(post("/clientes")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isUnprocessableEntity());
 	}
 	
 	@Test
@@ -181,7 +179,7 @@ public class ClienteResourceTest {
 	}
 	
 	@Test
-	public void givenClienteUpdtDtoInvalidSexo_whenPutCliente_thenStatus400() throws Exception {
+	public void givenClienteUpdtDtoInvalidSexo_whenPutCliente_thenStatus422() throws Exception {
 		
 		ClienteUpdtDTO obj = new ClienteUpdtDTO();
 		obj.setNome("Nome Atualizado com Sucesso");
@@ -193,11 +191,11 @@ public class ClienteResourceTest {
 		mvc.perform(put("/clientes/5")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isUnprocessableEntity());
 	}
 	
 	@Test
-	public void givenClienteUpdtDtoInvalidNameWithWhiteSpaces_whenPutCliente_thenStatus400() throws Exception {
+	public void givenClienteUpdtDtoInvalidNameWithWhiteSpaces_whenPutCliente_thenStatus422() throws Exception {
 		
 		ClienteUpdtDTO obj = new ClienteUpdtDTO();
 		obj.setNome("     Rafa");
@@ -209,11 +207,11 @@ public class ClienteResourceTest {
 		mvc.perform(put("/clientes/5")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isUnprocessableEntity());
 	}
 	
 	@Test
-	public void givenClienteUpdtDtoExistNameButdifferentId_whenPutCliente_thenStatus400() throws Exception {
+	public void givenClienteUpdtDtoExistNameButdifferentId_whenPutCliente_thenStatus422() throws Exception {
 		
 		ClienteUpdtDTO obj = new ClienteUpdtDTO();
 		obj.setNome("Bárbara Rebeca Gonçalves");
@@ -225,7 +223,7 @@ public class ClienteResourceTest {
 		mvc.perform(put("/clientes/5")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isUnprocessableEntity());
 	}
 	
 	@Test

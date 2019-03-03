@@ -102,7 +102,7 @@ public class VendedorResourceTest {
 	}
 	
 	@Test
-	public void givenVendedorNewDtoInvalidName_whenPostVendedor_thenStatus400() throws Exception {
+	public void givenVendedorNewDtoInvalidName_whenPostVendedor_thenStatus422() throws Exception {
 		
 		VendedorNewDTO vend = new VendedorNewDTO();
 		vend.setNome("Anth");
@@ -114,8 +114,7 @@ public class VendedorResourceTest {
 		mvc.perform(post("/vendedores")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(status().isUnprocessableEntity())
 				.andExpect(content().json("{'errors':[{'fieldName':'nome'}]}"));
 	}
 	
@@ -132,13 +131,12 @@ public class VendedorResourceTest {
 		mvc.perform(post("/vendedores")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(status().isUnprocessableEntity())
 				.andExpect(content().json("{'errors':[{'fieldName':'cpf'}]}"));
 	}
 	
 	@Test
-	public void givenVendedorNewDtoInvalidCpfAndName_whenPostVendedor_thenStatus400() throws Exception {
+	public void givenVendedorNewDtoInvalidCpfAndName_whenPostVendedor_thenStatus422() throws Exception {
 		
 		VendedorNewDTO vend = new VendedorNewDTO();
 		vend.setNome("Agatha Kamilly Alessandra Campos Amaral Santos Aparecida Moura Santana Lisboa");
@@ -150,12 +148,11 @@ public class VendedorResourceTest {
 		mvc.perform(post("/vendedores")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.msg").value("Erro de validação"));
+				.andExpect(status().isUnprocessableEntity());
 	}
 	
 	@Test
-	public void givenVendedorNewDtoDuplicatedCpf_whenPostVendedor_thenStatus400() throws Exception {
+	public void givenVendedorNewDtoDuplicatedCpf_whenPostVendedor_thenStatus422() throws Exception {
 		
 		VendedorNewDTO vend = new VendedorNewDTO();
 		vend.setNome("Alana Mariana Pereira");
@@ -167,13 +164,12 @@ public class VendedorResourceTest {
 		mvc.perform(post("/vendedores")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(status().isUnprocessableEntity())
 				.andExpect(content().json("{'errors':[{'fieldName':'cpf'}]}"));
 	}
 	
 	@Test
-	public void givenVendedorNewDtoDuplicatedName_whenPostVendedor_thenStatus400() throws Exception {
+	public void givenVendedorNewDtoDuplicatedName_whenPostVendedor_thenStatus422() throws Exception {
 		
 		VendedorNewDTO vend = new VendedorNewDTO();
 		vend.setNome("guilherme victor thiago corte real");
@@ -185,8 +181,7 @@ public class VendedorResourceTest {
 		mvc.perform(post("/vendedores")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(status().isUnprocessableEntity())
 				.andExpect(content().json("{'errors':[{'fieldName':'nome'}]}"));
 	}
 	
@@ -206,7 +201,7 @@ public class VendedorResourceTest {
 	}
 	
 	@Test
-	public void givenVendedorUpdtDtoInvalidName_whenPutVendedor_thenStatus204() throws Exception {
+	public void givenVendedorUpdtDtoInvalidName_whenPutVendedor_thenStatus422() throws Exception {
 		
 		VendedorUpdtDTO vend = new VendedorUpdtDTO();
 		vend.setNome("Nom");
@@ -217,13 +212,12 @@ public class VendedorResourceTest {
 		mvc.perform(put("/vendedores/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(status().isUnprocessableEntity())
 				.andExpect(content().json("{'errors':[{'fieldName':'nome'}]}"));
 	}
 	
 	@Test
-	public void givenVendedorUpdtDtoExistName_whenPutVendedor_thenStatus204() throws Exception {
+	public void givenVendedorUpdtDtoExistName_whenPutVendedor_thenStatus422() throws Exception {
 		
 		VendedorUpdtDTO vend = new VendedorUpdtDTO();
 		vend.setNome("Isabella Maria Novaes");
@@ -234,8 +228,7 @@ public class VendedorResourceTest {
 		mvc.perform(put("/vendedores/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
-				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.msg").value("Erro de validação"))
+				.andExpect(status().isUnprocessableEntity())
 				.andExpect(content().json("{'errors':[{'fieldName':'nome'}]}"));
 	}
 	
