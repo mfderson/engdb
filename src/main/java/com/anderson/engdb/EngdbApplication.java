@@ -33,6 +33,8 @@ public class EngdbApplication implements CommandLineRunner {
 		Vendedor vend2 = new Vendedor(null, "Isabella Maria Novaes", "06558847264");
 		Vendedor vend3 = new Vendedor(null, "Sara Isabel Nicole Moraes", "54591592375");
 		
+		vendedorRepository.saveAll(Arrays.asList(vend1, vend2, vend3));
+		
 		Cliente cli1 = new Cliente(null, "Tomás Kauê José Cardoso", "35838452340", Sexo.MASCULINO, vend1);
 		Cliente cli2 = new Cliente(null, "Levi Leonardo Sebastião Gonçalves", "94542917690", Sexo.MASCULINO, vend1);
 		Cliente cli3 = new Cliente(null, "Luna Luzia Manuela dos Santos", "91020915692", Sexo.FEMININO, vend2);
@@ -45,7 +47,6 @@ public class EngdbApplication implements CommandLineRunner {
 		vend2.getClientes().addAll(Arrays.asList(cli3, cli4));
 		vend1.getClientes().addAll(Arrays.asList(cli5, cli6, cli7));
 		
-		vendedorRepository.saveAll(Arrays.asList(vend1, vend2, vend3));
 		clienteRepository.saveAll(Arrays.asList(cli1, cli2, cli3, cli4, cli5, cli6, cli7));
 		
 	}

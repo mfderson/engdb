@@ -55,6 +55,11 @@ public class ClienteService {
 		return repo.save(newObj);
 	}
 	
+	public void delete(Integer id) {
+		findById(id);
+		repo.deleteById(id);
+	}
+	
 	public Page<Cliente> findAll(Pageable pageable) {
 		return repo.findAll(pageable);
 	}

@@ -1,6 +1,7 @@
 package com.anderson.engdb.resources;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -244,5 +245,13 @@ public class VendedorResourceTest {
 		mvc.perform(get("/vendedores/page")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void givenVendedorId_whenDeleteVendedor_thenStatus204() throws Exception {
+		
+		mvc.perform(delete("/vendedores/3")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNoContent());
 	}
 }

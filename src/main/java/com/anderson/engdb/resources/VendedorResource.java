@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,10 +57,16 @@ public class VendedorResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update (@PathVariable Integer id, @Valid @RequestBody VendedorUpdtDTO objDto) {
+	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody VendedorUpdtDTO objDto) {
 		Vendedor obj = service.fromDto(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	

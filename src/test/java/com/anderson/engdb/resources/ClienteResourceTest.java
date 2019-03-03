@@ -1,5 +1,6 @@
 package com.anderson.engdb.resources;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -249,5 +250,13 @@ public class ClienteResourceTest {
 		mvc.perform(get("/clientes/vendedorId?value=2")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void givenVendedorId_whenDeleteCliente_thenStatus204() throws Exception {
+		
+		mvc.perform(delete("/clientes/9")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNoContent());
 	}
 }

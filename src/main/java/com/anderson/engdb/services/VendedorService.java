@@ -51,6 +51,11 @@ public class VendedorService {
 		updateData(newObj, obj);
 		return repo.save(newObj);
 	}
+	
+	public void delete(Integer id) {
+		findById(id);
+		repo.deleteById(id);
+	}
 
 	public Vendedor fromDto(VendedorNewDTO objDto) {
 		Vendedor obj = new Vendedor(null, objDto.getNome().trim().replaceAll("\\s+", " "), objDto.getCpf());
