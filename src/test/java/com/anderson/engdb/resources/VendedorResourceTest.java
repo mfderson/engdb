@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.anderson.engdb.EngdbApplication;
 import com.anderson.engdb.domain.Vendedor;
-import com.anderson.engdb.dto.ClienteNewDTO;
 import com.anderson.engdb.dto.VendedorNewDTO;
 import com.anderson.engdb.dto.VendedorUpdtDTO;
 import com.anderson.engdb.repositories.VendedorRepository;

@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.anderson.engdb.EngdbApplication;
 import com.anderson.engdb.dto.ClienteNewDTO;
 import com.anderson.engdb.dto.ClienteUpdtDTO;
-import com.anderson.engdb.dto.VendedorNewDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
