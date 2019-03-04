@@ -59,7 +59,7 @@ Ao todo, foram feitos 33 testes na camada de resource que abrangem o sistema de 
 
 ### Clientes
 
-| Nome Método |
+| Nome do Método |
 |-------------|
 | givenClienteId_whenGetCliente_thenStatus200 |
 | givenClienteCpf_whenGetCliente_thenStatus200 |
@@ -78,10 +78,11 @@ Ao todo, foram feitos 33 testes na camada de resource que abrangem o sistema de 
 | givenFindAllClientes_whenGetClientesWithVendedores_thenStatus200 |
 | givenVendedorId_whenGetClientesByVendedorId_thenStatus200 |
 | givenVendedorId_whenDeleteCliente_thenStatus204 |
+| givenClienteNewDtoWhichIsAVendedor_whenPostCliente_thenStatus201 |
 
 ### Prestadores
 
-| Nome Método |
+| Nome do Método |
 |-------------|
 | givenVendedorId_whenGetVendedor_thenStatus200 |
 | givenVendedorCpf_whenGetVendedor_thenStatus200 |
@@ -98,6 +99,7 @@ Ao todo, foram feitos 33 testes na camada de resource que abrangem o sistema de 
 | givenVendedorUpdtDtoExistName_whenPutVendedor_thenStatus422 |
 | givenFindAllVendedores_whenGetVendedores_thenStatus200 |
 | givenVendedorId_whenDeleteVendedor_thenStatus204 |
+| givenVendedorNewDtoWhichIsACliente_whenPostVendedor_thenStatus201 |
 
 ## Referências
 
