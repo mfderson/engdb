@@ -1,24 +1,25 @@
 package com.anderson.engdb.dto;
 
 import com.anderson.engdb.domain.Cliente;
+import com.anderson.engdb.domain.enums.Sexo;
 
 public class ClienteViewDTO extends PessoaViewDTO {
 	private static final long serialVersionUID = 1L;
 
-	private String sexo;
+	private Integer sexo;
 	private String nomeVendedor;
 	
 	public ClienteViewDTO(Cliente obj) {
 		super(obj);
-		sexo = obj.getSexo().getDescricao();
+		sexo = (obj.getSexo() == null) ? null : obj.getSexo().getCod();
 		nomeVendedor = obj.getVendedor().getNome();
 	}
 
-	public String getSexo() {
-		return sexo;
+	public Sexo getSexo() {
+		return Sexo.toEnum(sexo);
 	}
 
-	public void setSexo(String sexo) {
+	public void setSexo(Integer sexo) {
 		this.sexo = sexo;
 	}
 

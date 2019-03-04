@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.anderson.engdb.EngdbApplication;
 import com.anderson.engdb.dto.ClienteNewDTO;
 import com.anderson.engdb.dto.ClienteUpdtDTO;
+import com.anderson.engdb.dto.VendedorNewDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
@@ -256,5 +257,23 @@ public class ClienteResourceTest {
 		mvc.perform(delete("/clientes/9")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNoContent());
+	}
+	
+	@Test
+	public void givenClienteNewDtoWhichIsAVendedor_whenPostCliente_thenStatus201() throws Exception {
+		
+		ClienteNewDTO obj = new ClienteNewDTO();
+		obj.setNome("Guilherme Victor Thiago Corte Real");
+		obj.setCpf("09720484306");
+		obj.setSexo(1);
+		obj.setVendedorId(1);
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(obj);
+		
+		mvc .perform(post("/clientes")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isCreated());
 	}
 }

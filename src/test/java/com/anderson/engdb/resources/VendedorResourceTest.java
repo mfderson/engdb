@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.anderson.engdb.EngdbApplication;
 import com.anderson.engdb.domain.Vendedor;
+import com.anderson.engdb.dto.ClienteNewDTO;
 import com.anderson.engdb.dto.VendedorNewDTO;
 import com.anderson.engdb.dto.VendedorUpdtDTO;
 import com.anderson.engdb.repositories.VendedorRepository;
@@ -245,5 +246,21 @@ public class VendedorResourceTest {
 		mvc.perform(delete("/vendedores/3")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNoContent());
+	}
+	
+	@Test
+	public void givenVendedorNewDtoWhichIsACliente_whenPostVendedor_thenStatus201() throws Exception {
+		
+		VendedorNewDTO obj = new VendedorNewDTO();
+		obj.setNome("Tomás Kauê José Cardoso");
+		obj.setCpf("35838452340");
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		String json = objMapper.writeValueAsString(obj);
+		
+		mvc .perform(post("/vendedores")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+				.andExpect(status().isCreated());
 	}
 }
