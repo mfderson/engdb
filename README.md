@@ -50,8 +50,8 @@ Existe uma documentação que foi gerada de forma automática com Swagger. Para 
 | GET | /vendedores/cpf?value=12345678932 | Busca por CPF |
 | GET | /vendedores/page | Retorna todos os vendedores com paginação |
 | POST | /vendedores | Insere vendedor |
-| PUT | /vendedores | Atualiza vendedor |
-| DELETE | /vendedores | Remove vendedor |
+| PUT | /vendedores/{id} | Atualiza vendedor |
+| DELETE | /vendedores/{id} | Remove vendedor |
 
 ## Testes Unitários
 
