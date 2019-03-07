@@ -35,7 +35,7 @@ public class ClienteResourceTest {
 	@Test
 	public void givenClienteId_whenGetCliente_thenStatus200() throws Exception {
 		
-		mvc.perform(get("/clientes/4")
+		mvc.perform(get("/clientes/27")
 			.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content()
@@ -46,12 +46,12 @@ public class ClienteResourceTest {
 	@Test
 	public void givenClienteCpf_whenGetCliente_thenStatus200() throws Exception {
 		
-		mvc.perform(get("/clientes/cpf?value=94542917690")
+		mvc.perform(get("/clientes/cpf?value=35838452340")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content()
 				.contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$.nome").value("Levi Leonardo Sebastião Gonçalves"));
+				.andExpect(jsonPath("$.nome").value("Tomás Kauê José Cardoso"));
 	}
 	
 	@Test
@@ -172,7 +172,7 @@ public class ClienteResourceTest {
 		ObjectMapper objMapper = new ObjectMapper();
 		String json = objMapper.writeValueAsString(obj);
 		
-		mvc.perform(put("/clientes/4")
+		mvc.perform(put("/clientes/29")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
 				.andExpect(status().isNoContent());
@@ -253,7 +253,7 @@ public class ClienteResourceTest {
 	@Test
 	public void givenVendedorId_whenDeleteCliente_thenStatus204() throws Exception {
 		
-		mvc.perform(delete("/clientes/9")
+		mvc.perform(delete("/clientes/30")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNoContent());
 	}
