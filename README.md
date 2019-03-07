@@ -109,5 +109,5 @@ Ao todo, foram feitos 33 testes na camada de resource que abrangem o sistema de 
 
 3. Para implementação do código foram diversos *links* utilizados, os principais foram:
 
-* [Professor Nelio Alves](https://www.udemy.com/spring-boot-ionic/);
-* [Baeldung](https://www.baeldung.com/).
+   * [Professor Nelio Alves](https://www.udemy.com/spring-boot-ionic/);
+   * [Baeldung](https://www.baeldung.com/).
